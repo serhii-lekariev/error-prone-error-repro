@@ -3,18 +3,23 @@ package repro;
 public enum EnumThatReproduces {
 
     INSTANCE {
+
+        /**
+         * {@link Throwable}
+         */
         @Override
-        public Object test() {
-            return null;
+        public void test() {
         }
 
         /**
-         * {@link java.lang.Throwable}
+         * This link also triggers an error.
+         *
+         * {@link Object}
          */
-        private void unusedMethod() {
+        private void method() {
 
         }
     };
 
-    public abstract Object test();
+    public abstract void test();
 }
