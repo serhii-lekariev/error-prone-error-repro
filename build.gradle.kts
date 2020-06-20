@@ -2,7 +2,6 @@ import java.net.URI
 
 plugins {
     java
-    id("net.ltgt.errorprone").version("1.2.1")
 }
 
 java {
@@ -11,16 +10,22 @@ java {
 
 repositories {
     mavenCentral()
-    maven { url = URI("https://plugins.gradle.org/m2/") }
     jcenter()
 }
 
 repositories {
-    maven { url = URI("https://plugins.gradle.org/m2/") }
     mavenCentral()
     jcenter()
 }
 
 dependencies {
-    errorprone("com.google.errorprone:error_prone_core:2.4.0")
+    annotationProcessor("com.google.errorprone:error_prone_core:2.4.0") {
+        exclude("com.google.errorprone", "javac")
+    }
+}
+
+tasks {
+    compileJava {
+        options.compilerArgs.addAll(listOf("-Xplugin:ErrorProne", "-XDcompilePolicy=simple"))
+    }
 }
