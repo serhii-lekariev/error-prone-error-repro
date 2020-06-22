@@ -5,12 +5,12 @@ If an enum constant declares a method that has a Javadoc that references any cla
 Removing the `{@link }` from Javadocs fixes the issue. 
 
 
-To reproduce, run  `mvn clean compile` 
+To reproduce, clone this repo and run `mvn clean compile` from `/<path>/error-prone-repro` 
 ```
 $ mvn clean compile
   
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project reproduction: Compilation failure
-[ERROR] /home/error-prone-openjdk11-repro/src/main/java/repro/EnumThatReproduces.java:[5,14] enum types may not be instantiated
+[ERROR] /home/error-prone-repro/src/main/java/repro/EnumThatReproduces.java:[5,14] enum types may not be instantiated
 
 ```
 
