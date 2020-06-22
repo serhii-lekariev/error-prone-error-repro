@@ -5,7 +5,7 @@ If an enum constant declares a method that has a Javadoc that references any cla
 Removing the `{@link }` from Javadocs fixes the issue. 
 
 
-To reproduce, clone this repo and run `mvn clean compile` from `/<path>/error-prone-repro` 
+To reproduce, clone this repo and run `mvn clean compile` from the root repo directory.
 ```
 $ mvn clean compile
   
