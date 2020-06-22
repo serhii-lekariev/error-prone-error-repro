@@ -1,49 +1,29 @@
 This repository contains a small Java program, which reproduces a strange Java compiler error that occurs when using Error Prone 2.4.0
 
 If an enum constant declares a method that has a Javadoc that references any class with a `{@link }`, the compiler errors out with
-`error: enum types may not be instantiated`.
+`enum types may not be instantiated`.
 Removing the `{@link }` from Javadocs fixes the issue. 
 
 
-To reproduce, run  `./gradlew clean build` 
+To reproduce, run  `mvn clean compile` 
 ```
-$ ./gradlew clean build
+$ mvn clean compile
   
-  > Task :compileJava FAILED
-  /home/error-prone-openjdk11-repro/src/main/java/repro/EnumThatReproduces.java:19: warning: [UnusedMethod] Private method 'method' is never used.
-          private void method() {
-                       ^
-      (see https://errorprone.info/bugpattern/UnusedMethod)
-    Did you mean to remove this line?
-  /home/error-prone-openjdk11-repro/src/main/java/repro/EnumThatReproduces.java:5: error: enum types may not be instantiated
-      INSTANCE {
-               ^
-  1 error
-  1 warning
-```
-
-The warning is expected, but the Java compiler error is not.
-
-When Error Prone is removed from `dependencies` is `build.gradle.kts`, the error disappears.
-
-Decreasing the version to `2.3.4` also makes the error disappear.
-
-Environment info:
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project reproduction: Compilation failure
+[ERROR] /home/error-prone-openjdk11-repro/src/main/java/repro/EnumThatReproduces.java:[5,14] enum types may not be instantiated
 
 ```
-$ ./gradlew -v
 
-------------------------------------------------------------
-Gradle 6.5
-------------------------------------------------------------
+I was unable to reproduce this with Error Prone `2.3.4` or below.
 
-Build time:   2020-06-02 20:46:21 UTC
-Revision:     a27f41e4ae5e8a41ab9b19f8dd6d86d7b384dad4
+I'm using Maven 3.6.3 and Java 13. The error can be reproduced using the Gradle plugin, using Java 11 and Java 8.
 
-Kotlin:       1.3.72
-Groovy:       2.5.11
-Ant:          Apache Ant(TM) version 1.10.7 compiled on September 1 2019
-JVM:          11.0.7 (AdoptOpenJDK 11.0.7+10)
-OS:           Mac OS X 10.15.4 x86_64
+```
+$ mvn -v 
+  Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+  Maven home: /usr/local/Cellar/maven/3.6.3_1/libexec
+  Java version: 13.0.2, vendor: N/A, runtime: /usr/local/Cellar/openjdk/13.0.2+8_2/libexec/openjdk.jdk/Contents/Home
+  Default locale: en_UA, platform encoding: UTF-8
+  OS name: "mac os x", version: "10.15.4", arch: "x86_64", family: "mac"
 ```
 
